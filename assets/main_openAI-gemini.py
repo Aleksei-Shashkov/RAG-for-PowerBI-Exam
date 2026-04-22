@@ -17,7 +17,7 @@ from llama_index.core.query_engine import RetrieverQueryEngine
 import google.generativeai as genai
 
 # --- 1. КОНФИГУРАЦИЯ ---
-API_KEY = "AIzaSyAKIlIw4gk6WPTWAVIZIbsLrkvIx_3ijbg"
+API_KEY = "My_key"
 genai.configure(api_key=API_KEY)
 
 class GeminiLLM(CustomLLM):
