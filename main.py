@@ -27,18 +27,27 @@ def create_rag_system():
     persist_dir = "./chroma_db"
     input_dirs = ["instructions/Labs", "instructions/Demos"]
     
-    # Инициализируем клиент базы данных
+    # Путь к обязательному файлу индекса
+    docstore_path = os.path.join(persist_dir, "docstore.json")
+    
+    # Инициализируем Chroma
     db = chromadb.PersistentClient(path=persist_dir)
     chroma_collection = db.get_or_create_collection("powerbi_exam_collection")
     vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
     
-    # Проверяем, есть ли уже данные в базе
-    if chroma_collection.count() > 0:
-        print(">>> Шаг 1: Найдена готовая база. Мгновенная загрузка...")
-        storage_context = StorageContext.from_defaults(vector_store=vector_store, persist_dir=persist_dir)
-        index = VectorStoreIndex.from_vector_store(vector_store, storage_context=storage_context)
+    # ПРОВЕРКА: Если есть записи в БД И физический файл индекса на месте
+    if chroma_collection.count() > 0 and os.path.exists(docstore_path):
+        print(">>> Шаг 1: Индекс найден. Загрузка...")
+        storage_context = StorageContext.from_defaults(
+            vector_store=vector_store, 
+            persist_dir=persist_dir
+        )
+        index = VectorStoreIndex.from_vector_store(
+            vector_store, 
+            storage_context=storage_context
+        )
     else:
-        print(">>> Шаг 1: База пуста. Начинаю индексацию (это может занять время)...")
+        print(">>> Шаг 1: Индекс не найден или поврежден. Пересоздание...")
         documents = []
         for directory in input_dirs:
             if os.path.exists(directory):
@@ -46,12 +55,18 @@ def create_rag_system():
                 documents.extend(reader.load_data())
         
         if not documents:
-            print("ОШИБКА: Документы не найдены!")
+            print("ОШИБКА: Документы для индексации не найдены!")
             return None
             
+        # Создаем контекст и индекс с нуля
         storage_context = StorageContext.from_defaults(vector_store=vector_store)
-        index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)
-        print(">>> Индексация завершена.")
+        index = VectorStoreIndex.from_documents(
+            documents, 
+            storage_context=storage_context
+        )
+        # ВАЖНО: Принудительно сохраняем JSON-файлы на диск
+        storage_context.persist(persist_dir=persist_dir)
+        print(">>> Индексация завершена. Файлы сохранены в /chroma_db")
         
     return index
 

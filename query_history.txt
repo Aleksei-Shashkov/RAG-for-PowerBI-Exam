@@ -82,3 +82,27 @@ Original Answer: ## Разница между `CALCULATE` и `FILTER`
 
 
 =======================================================
+Дата: 2026-04-22 14:44:35
+Вопрос: Когда лучше использовать DirectQuery вместо Import?
+Ответ: DirectQuery is faster for large datasets and minimizes server load.  Import can be easier to use with various data sources but may have slower query times. 
+
+=======================================================
+Дата: 2026-04-22 15:04:11
+Вопрос: Какие типы фильтров в Power BI имеют наивысший приоритет согласно списку вопросов?
+Ответ: ! 
+
+=======================================================
+Дата: 2026-04-22 15:19:34
+Вопрос: Объясни вопрос про DirectQuery из файла и предложи правильный ответ с обоснованием
+Ответ: DirectQuery is a way to work with data in Power BI that allows you to get data from a database without copying it to your local system.  It's like getting the information directly from the source. 
+
+Why is DirectQuery important?
+
+* **Fast and efficient access:** DirectQuery works without needing to copy data locally, which speeds up loading times and improves performance.
+* **Reduced server load:** Data isn't stored locally, so it reduces the load on Power BI servers. 
+* **Increased flexibility:**  DirectQuery allows you to use various databases like SQL Server, Oracle, and others.
+
+
+In short, DirectQuery is a powerful tool for working with large datasets in Power BI, allowing you to get fast and efficient results. 
+
+=======================================================
