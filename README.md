@@ -1,6 +1,6 @@
 # RAG-for-PowerBI-Exam
 
-## Project Overview
+## 🔭Project Overview
 ![Project-Structure](assets/picture.png) 
 This project is an AI-powered assistant designed to help students prepare for the Microsoft Power BI Data Analyst (PL-300) certification. It uses Retrieval-Augmented Generation (RAG) to provide accurate answers based on official lab instructions and demo materials.
 
@@ -16,7 +16,7 @@ The primary value of this assistant is its ability to provide grounded, "halluci
 * **Resource Efficiency**: Optimized for low-end hardware through model quantization (Gemma 2 2B) and efficient vector indexing.
 * **Contextual Accuracy**: Uses semantic search to find English context and translate/explain it in Russian for the user.
 
-## Installation
+## 🚀Installation
 1. Clone the project:
 ```bash
     cd repo
@@ -63,24 +63,20 @@ This repository contains the hands-on lab exercises for Microsoft course [PL-300
 ```
 ### I. Persistent Indexing & Smart Loading
 The system implements a self-healing database check. It looks for an existing docstore.json in chroma_db. If found, it loads the index instantly; otherwise, it triggers a full re-indexing of the Instructions folder. This saves significant time and CPU resources during daily use.
-
 ### II. Local LLM Integration (Ollama)
 To overcome "Unknown model" errors and API costs, the system uses a custom Ollama wrapper. The Gemma 2 2B model was selected for its high performance-to-size ratio, allowing it to fit within a 3.7GB RAM footprint.
-
 ### III. Streaming & Performance Optimization
 To enhance user experience on limited hardware:
 * **Streaming:** Responses are displayed word-by-word as they are generated.
 * **Timeout Management:** Global timeouts are extended to 600s to allow for initial model loading on slower CPUs.
 * **Top-K Refinement:** The retriever is tuned to fetch only the 3 most relevant segments to keep the context window lean.
-
 ### IV. Automated Audit Trail
 Every interaction is captured in query_history.txt. Each entry includes:
 * Timestamp of the query.
 * The user's original question.
 * The AI-generated answer.
 * This creates a permanent record for reviewing difficult topics later.
-
-### Dynamic Prompt Engineering
+### V. Dynamic Prompt Engineering
 The system uses a strict prompt template to enforce language consistency and grounding:
 ```Python
 template = (
@@ -93,12 +89,13 @@ template = (
     "Your answer in RUSSIAN: "
 )
 ```
-## Future Improvements
+
+## 🔮Future Improvements
 Self-Correction Loop: Implementing a secondary check to verify if the answer matches the retrieved Lab steps.
 Web Interface: Migrating from terminal to a Gradio/Streamlit UI.
 Multi-Model Support: Adding a toggle between Gemma 2 and TinyLlama for ultra-low resource environments.
 
-## **Timeline**
+## 🕒**Timeline**
 This solo project was completed over 2 days.
 
 ## 📌 Personal context note
