@@ -4,7 +4,7 @@
 ![Project-Structure](assets/picture.png) 
 This project is an AI-powered assistant designed to help students prepare for the Microsoft Power BI Data Analyst (PL-300) certification. It uses Retrieval-Augmented Generation (RAG) to provide accurate answers based on official lab instructions and demo materials.
 
-## Description
+## 📖Description
 Preparing for technical certifications often involves navigating through hundreds of pages of documentation. This project simplifies the process by creating a local RAG pipeline. Using **LlamaIndex**, **ChromaDB**, and **Ollama**, the assistant retrieves relevant context from local Markdown files and generates expert responses in Russian. The system is optimized to run on local hardware with limited resources (e.g., 4GB RAM) using the **Gemma 2 2B** model.
 
 ## 📊 Strategic Insights
@@ -40,7 +40,7 @@ Place your study materials (.md files) into the Instructions/Labs and Instructio
     python main.py
 ```
 ## 📁 Repo Structure
-RAG-for-PowerBI-Exam
+```RAG-for-PowerBI-Exam
 ├── assets/                  # Images and Project_description
 ├── chroma_db/               # Persistent vector database (auto-generated)
 ├── Instructions/            # Source documents (Labs & Demos)
@@ -48,17 +48,19 @@ RAG-for-PowerBI-Exam
 ├── query_history.txt        # Automated audit log of Q&A
 ├── questions.txt            # Sample exam questions for testing
 └── README.md
-
+```
+## 🌐 Sources
 This repository contains the hands-on lab exercises for Microsoft course [PL-300: Microsoft Power BI Data Analyst](https://docs.microsoft.com/en-us/learn/certifications/courses/PL-300T00). The labs are designed to accompany the learning materials and enable learners to practice using the technologies they describe.
 
 ## 🛠️Process & Methodology
+```
 ┌──────────────┐      ┌────────────────┐      ┌──────────────────┐      ┌──────────────┐
 │  User Query  │ ──►  │ Semantic Search│ ──►  │ Context Injection│ ──►  │ Final Result │
 │  (Russian)   │      │  (ChromaDB)    │      │  (Prompt Eng)    │      │ (RU Answer)  │
 └──────────────┘      └────────────────┘      └──────────────────┘      └──────────────┘
  "Как создать          Find Top-K relevant       Merge Query +             Streaming 
     меру?"              Lab chunks (EN)           Context (EN)              Response
-
+```
 ### I. Persistent Indexing & Smart Loading
 The system implements a self-healing database check. It looks for an existing docstore.json in chroma_db. If found, it loads the index instantly; otherwise, it triggers a full re-indexing of the Instructions folder. This saves significant time and CPU resources during daily use.
 
